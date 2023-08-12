@@ -10,20 +10,33 @@ def read_sensor_data():
     data = bytearray()
     while True:
         if uart.any():
-            byte = uart.read(1)
-            if byte == START_CHARACTER_1:
-                data += byte
-                if uart.read(1) == START_CHARACTER_2:
-                    data += byte
+            first_byte = uart.read(1)
+            if first_byte == START_CHARACTER_1:
+                data += first_byte
+                second_byte = uart.read(1)
+                if second_byte == START_CHARACTER_2:
+                    data += second_byte
                     data += uart.read(30)
                     return data
+
+def extract_pm_concentration(data, low_byte_index, high_byte_index):
+    low_byte = data[low_byte_index]
+    high_byte = data[high_byte_index]
+    pm_concentration = (high_byte << 8) | low_byte
+    return pm_concentration / 10.0  # Convert to μg/m³
 
 while True:
     try:
         sensor_data = read_sensor_data()
         # Process sensor_data here
-        print("Received data:", sensor_data)
-        time.sleep(1)
+        print("Sensor data:", sensor_data)
+        pm1_concentration = extract_pm_concentration(sensor_data, 4, 5)
+        pm25_concentration = extract_pm_concentration(sensor_data, 6, 7)
+        pm10_concentration = extract_pm_concentration(sensor_data, 8, 9)
+        print("PM1.0:", pm1_concentration, "μg/m³")
+        print("PM2.5:", pm25_concentration, "μg/m³")
+        print("PM10:", pm10_concentration, "μg/m³")
+        print()  # Print a new line
     except Exception as e:
         print("Error:", e)
-        time.sleep(5)
+    time.sleep(5)
