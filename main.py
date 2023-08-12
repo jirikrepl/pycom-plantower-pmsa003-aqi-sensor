@@ -30,7 +30,7 @@ def extract_pm_concentration(data, low_byte_index, high_byte_index):
     low_byte = data[low_byte_index]
     high_byte = data[high_byte_index]
     pm_concentration = (high_byte << 8) | low_byte
-    return pm_concentration / 10.0  # Convert to μg/m³
+    return pm_concentration
 
 while True:
     try:
