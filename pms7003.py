@@ -88,6 +88,10 @@ class Pms7003:
             if checksum != data[Pms7003.PMS_CHECKSUM]:
                 continue
 
+            # Clear any remaining bytes in the UART buffer
+            while self.uart.any():
+                self.uart.read(1)
+
             return {
                 'FRAME_LENGTH': data[Pms7003.PMS_FRAME_LENGTH],
                 'PM1_0': data[Pms7003.PMS_PM1_0],
