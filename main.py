@@ -6,11 +6,12 @@ START_CHARACTER_2 = b'\x4D'
 
 uart = UART(1, 9600)
 
+
 def read_sensor_data():
     data = bytearray()
     while True:
         uart_bytes_length = uart.any()
-        # print('uart_bytes_lenth:', uart_bytes)
+        # print('uart_bytes_length:', uart_bytes)
         if uart_bytes_length:
             first_byte = uart.read(1)
             # print('first_byte:', first_byte)
@@ -26,11 +27,13 @@ def read_sensor_data():
                         uart.read(1)
                     return data
 
+
 def extract_pm_concentration(data, low_byte_index, high_byte_index):
     low_byte = data[low_byte_index]
     high_byte = data[high_byte_index]
     pm_concentration = (high_byte << 8) | low_byte
     return pm_concentration
+
 
 while True:
     try:
