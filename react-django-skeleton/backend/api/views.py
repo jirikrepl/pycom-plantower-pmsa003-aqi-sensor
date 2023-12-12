@@ -20,3 +20,15 @@ class ReactView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+
+class AQIView(APIView):
+    def get(self, request):
+        # output = [{"name": "John", "age": 27}, {"name": "Mary", "age": 25}]
+        return Response("THIS IS A AQI GET TEST")
+
+    def post(self, request):
+        return Response("THIS IS A AQI POST TEST")
+        # serializer = UserSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
