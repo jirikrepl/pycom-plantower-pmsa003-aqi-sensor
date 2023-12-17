@@ -3,6 +3,10 @@
 ### Web app frontend and backend
 https://github.com/RobPruzan/React-Django-Skeleton-
 
+Post AQI data to the backend
+
+    curl -X POST -H "Content-Type: application/json" -d '{"pm1_0_concentration": 10.5, "pm2_5_concentration": 20.3, "pm10_concentration": 30.1}' http://localhost:8000/aqi
+
 ### PMSA003 sensor
 
 Arduino library
