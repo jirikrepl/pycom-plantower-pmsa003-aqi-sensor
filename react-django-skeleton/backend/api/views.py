@@ -1,6 +1,6 @@
 from rest_framework import generics
 from django.shortcuts import render
-from .models import User
+from .models import User, AirQuality
 from .serializers import UserSerializer, AirQualitySerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -23,8 +23,9 @@ class ReactView(APIView):
 
 class AQIView(APIView):
     def get(self, request):
-        # output = [{"name": "John", "age": 27}, {"name": "Mary", "age": 25}]
-        return Response("THIS IS A AQI GET TEST")
+        queryset = AirQuality.objects.all()
+        serializer = AirQualitySerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = AirQualitySerializer(data=request.data)
