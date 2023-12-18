@@ -1,12 +1,11 @@
 import time
 import socket
+import ujson
 from network import WLAN
 from Pms7003 import Pms7003 as Pms7003Class
-from secrets import WIFI_SSID, WIFI_PASSWORD
+from secrets import WIFI_SSID, WIFI_PASSWORD, HOST, PORT, API_ENDPOINT
 
 pms_instance = Pms7003Class(1)
-host = '192.168.88.214/aqi'  # Replace with your actual API endpoint
-api_endpoint = 'http://192.168.88.214:8000/aqi'  # Replace with your actual API endpoint
 
 wlan = WLAN()
 wlan.connect(ssid=WIFI_SSID, auth=(WLAN.WPA2, WIFI_PASSWORD))
@@ -28,33 +27,25 @@ while True:
             'pm2_5_concentration': PM2_5,
             'pm10_concentration': PM10_0
         }
-
-        # Convert data to a string
-        # payload_str = json.dumps(payload)
-
-        # Create a socket connection
-        s = socket.socket()
-        addr = socket.getaddrinfo('192.168.88.214', 8000)[0][-1]
-        print(addr)
-        s.connect(addr)
-
-        json_payload = '{"pm1_0_concentration": 10.5, "pm2_5_concentration": 20.3, "pm10_concentration": 30.1}'
+        json_payload = ujson.dumps(payload)
         content_length = len(json_payload)
 
-        http_request = "POST /aqi HTTP/1.1\r\n" \
-                       "Host: 192.168.88.214:8000\r\n" \
+        my_socket = socket.socket()
+        my_socket.connect((HOST, PORT))
+
+        http_request = "POST {} HTTP/1.1\r\n" \
+                       "Host: {}:{}\r\n" \
                        "Content-Type: application/json\r\n" \
                        "Content-Length: {}\r\n\r\n" \
-                       "{}".format(content_length, json_payload)
-
-        s.send(http_request.encode())
+                       "{}".format(API_ENDPOINT, HOST, PORT, content_length, json_payload)
+        my_socket.send(http_request.encode())
 
         # Receive and print the response
-        rec_bytes = s.recv(4096)
+        rec_bytes = my_socket.recv(4096)
         print("Response from server:", rec_bytes.decode())
 
         # Close the socket
-        s.close()
+        my_socket.close()
     except Exception as e:
         print("Error:", e)
     time.sleep(5)
