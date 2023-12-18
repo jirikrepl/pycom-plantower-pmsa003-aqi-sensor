@@ -2,13 +2,14 @@ import time
 import socket
 from network import WLAN
 from Pms7003 import Pms7003 as Pms7003Class
+from secrets import WIFI_SSID, WIFI_PASSWORD
 
 pms_instance = Pms7003Class(1)
 host = '192.168.88.214/aqi'  # Replace with your actual API endpoint
 api_endpoint = 'http://192.168.88.214:8000/aqi'  # Replace with your actual API endpoint
 
 wlan = WLAN()
-wlan.connect(ssid='', auth=(WLAN.WPA2, ''))
+wlan.connect(ssid=WIFI_SSID, auth=(WLAN.WPA2, WIFI_PASSWORD))
 print('connecting..',end='')
 while not wlan.isconnected():
     time.sleep(1)
