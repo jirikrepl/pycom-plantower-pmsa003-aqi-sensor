@@ -1,3 +1,7 @@
+/**
+ * Line chart
+ * https://react-chartjs-2.js.org/examples/line-chart
+ */
 import {
     Chart as ChartJS,
     CategoryScale,
