@@ -46,7 +46,15 @@ type DataEntry = {
 };
 
 const AQIChart = ({ data }: { data: DataEntry[] }) => {
-    const labels = data.map(entry => new Date(entry.datetime).toLocaleTimeString());
+    const labels = data.map(entry => {
+        const datetime = new Date(entry.datetime);
+        const timeOptions: Intl.DateTimeFormatOptions = { hour12: false, hour: '2-digit', minute: '2-digit' };
+        const time = datetime.toLocaleTimeString([], timeOptions);
+        const day = datetime.getDate().toString().padStart(2, '0');
+        const month = (datetime.getMonth() + 1).toString().padStart(2, '0');
+        const year = datetime.getFullYear();
+        return `${day}.${month}.${year} ${time}`;
+    });
     const datasets = [
         {
             label: 'PM1.0 Concentration',
