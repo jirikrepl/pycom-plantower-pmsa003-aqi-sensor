@@ -1,6 +1,6 @@
-// AirQualityComponent.js
 import React from 'react';
 import useAirQuality from '../hooks/useAirQuality';
+import AQIChart from './AQIChart';
 
 const AirQualityComponent = () => {
     const { data, error, isLoading } = useAirQuality();
@@ -15,7 +15,7 @@ const AirQualityComponent = () => {
 
     return (
         <div>
-            <h1>Air Quality Data</h1>
+            <AQIChart data={data} />
             <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
     );
