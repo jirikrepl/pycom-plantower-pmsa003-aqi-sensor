@@ -35,14 +35,14 @@ const options = {
 };
 
 type DataEntry = {
-    timestamp: string,
+    datetime: string,
     pm1_0_concentration: string,
     pm2_5_concentration: string,
     pm10_concentration: string,
 };
 
 const AQIChart = ({ data }: { data: DataEntry[] }) => {
-    const labels = data.map(entry => new Date(entry.timestamp).toLocaleTimeString());
+    const labels = data.map(entry => new Date(entry.datetime).toLocaleTimeString());
     const datasets = [
         {
             label: 'PM1.0 Concentration',
@@ -72,7 +72,7 @@ AQIChart.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,
-            timestamp: PropTypes.string.isRequired,
+            datetime: PropTypes.string.isRequired,
             pm1_0_concentration: PropTypes.string.isRequired,
             pm2_5_concentration: PropTypes.string.isRequired,
             pm10_concentration: PropTypes.string.isRequired,

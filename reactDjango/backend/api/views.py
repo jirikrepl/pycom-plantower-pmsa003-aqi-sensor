@@ -1,9 +1,10 @@
 from rest_framework import generics
-from django.shortcuts import render
 from .models import User, AirQuality
 from .serializers import UserSerializer, AirQualitySerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models import Avg
+from django.db.models.functions import Trunc
 
 # Create your views here.
 class UserView(generics.CreateAPIView):
@@ -21,11 +22,23 @@ class ReactView(APIView):
             serializer.save()
             return Response(serializer.data)
 
+# Averages for PM1.0, PM2.5, and PM10 concentrations, grouped by each hour.
+# Returns the results as a JSON response.
 class AQIView(APIView):
     def get(self, request):
-        queryset = AirQuality.objects.all()
-        serializer = AirQualitySerializer(queryset, many=True)
-        return Response(serializer.data)
+        hourly_averages = (
+            AirQuality.objects
+            .annotate(datetime=Trunc('timestamp', 'hour'))
+            .values('datetime')
+            .annotate(
+                pm1_0_concentration=Avg('pm1_0_concentration'),
+                pm2_5_concentration=Avg('pm2_5_concentration'),
+                pm10_concentration=Avg('pm10_concentration')
+            )
+            .order_by('datetime')
+        )
+        hourly_averages_list = list(hourly_averages)
+        return Response(hourly_averages_list)
 
     def post(self, request):
         serializer = AirQualitySerializer(data=request.data)
