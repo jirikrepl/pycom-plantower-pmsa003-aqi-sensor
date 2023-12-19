@@ -9,10 +9,10 @@ pms_instance = Pms7003Class(1)
 
 wlan = WLAN()
 wlan.connect(ssid=WIFI_SSID, auth=(WLAN.WPA2, WIFI_PASSWORD))
-print('connecting..',end='')
+print('connecting..', end='')
 while not wlan.isconnected():
     time.sleep(1)
-    print('.',end='')
+    print('.', end='')
 
 while True:
     try:
@@ -48,4 +48,4 @@ while True:
         my_socket.close()
     except Exception as e:
         print("Error:", e)
-    time.sleep(5)
+    time.sleep(60)
