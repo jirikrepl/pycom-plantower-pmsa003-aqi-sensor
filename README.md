@@ -3,6 +3,11 @@
 ### Web app frontend and backend
 https://github.com/RobPruzan/React-Django-Skeleton-
 
+Migrate with local_settings.py
+
+    cd backend
+    python3 manage.py migrate --settings=backend.local_settings
+
 Run the backend server. With local_settings.py and port 8000 bind to all interfaces
 https://stackoverflow.com/a/14545196/1303387
 
