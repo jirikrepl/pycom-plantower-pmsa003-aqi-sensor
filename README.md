@@ -18,6 +18,21 @@ Post AQI data to the backend
 
     curl -X POST -H "Content-Type: application/json" -d '{"pm1_0_concentration": 10.5, "pm2_5_concentration": 20.3, "pm10_concentration": 30.1}' http://localhost:8000/aqi
 
+### Deployment
+Clouds with free tiers:
+https://github.com/cloudcommunity/Cloud-Free-Tier-Comparison
+
+On Oracle free tier WM. Open ports for django server.
+
+https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/apache-on-ubuntu/01oci-ubuntu-apache-summary.htm
+
+1. Create ingress rule for port 8000
+2. Set up iptables
+
+
+    sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 8000 -j ACCEPT
+    sudo netfilter-persistent save
+
 ### PMSA003 sensor
 
 Arduino library
