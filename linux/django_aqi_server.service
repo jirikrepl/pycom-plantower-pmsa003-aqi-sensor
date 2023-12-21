@@ -1,0 +1,13 @@
+[Unit]
+Description=Django AQI Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ubuntu/pycom-aqi/reactDjango/backend/manage.py runserver 0.0.0.0:8000 --settings=backend.prod_settings
+WorkingDirectory=/home/ubuntu/pycom-aqi/reactDjango/backend
+User=ubuntu
+Group=ubuntu
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

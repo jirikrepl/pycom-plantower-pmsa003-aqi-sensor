@@ -1,0 +1,14 @@
+[Unit]
+Description=React App Service
+After=network.target
+
+[Service]
+ExecStart=/bin/bash -lc '/home/ubuntu/.nvm/versions/node/v18.19.0/bin/serve -s build'
+WorkingDirectory=/home/ubuntu/pycom-aqi/reactDjango/web
+Restart=always
+RestartSec=3
+User=ubuntu
+Environment=PATH=/home/ubuntu/.nvm/versions/node/v18.19.0/bin:/usr/bin:$PATH
+
+[Install]
+WantedBy=multi-user.target
