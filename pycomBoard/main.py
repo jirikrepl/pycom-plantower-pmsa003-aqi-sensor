@@ -1,9 +1,12 @@
 import time
 import socket
 import ujson
+import pycom
 from network import WLAN
 from Pms7003 import Pms7003 as Pms7003Class
 from secrets import WIFI_SSID, WIFI_PASSWORD, HOST, PORT, API_ENDPOINT
+
+pycom.heartbeat(False)  # disable the heartbeat LED
 
 pms_instance = Pms7003Class(1)
 
