@@ -50,3 +50,5 @@ https://navody.dratek.cz/navody-k-produktum/lcd-displej-nokia-5110.html
 https://www.youtube.com/watch?v=DehRWwvWFuo
 
 ![pm levels](pm_levels.png)
+
+![co2 levels](co2_levels.png)
