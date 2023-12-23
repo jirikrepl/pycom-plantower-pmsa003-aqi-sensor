@@ -49,7 +49,7 @@ void printAverage() {
   uint16_t average = static_cast<uint16_t>(sum / validMeasurements);
 
   // Print the average CO2 concentration
-  Serial.print("Average CO2 Concentration: ");
+  Serial.print("\nAverage CO2 Concentration: ");
   Serial.println(average);
 }
 
@@ -81,6 +81,7 @@ void loop() {
         // Print CO2 concentration
         // Serial.print("CO2 Concentration: ");
         // Serial.println(co2Concentration);
+        Serial.print(".");
 
         // Check if it's time to print the average
         if ((millis() - lastPrintTime >= intervalPrintTime) || (millis() < lastPrintTime)) {
